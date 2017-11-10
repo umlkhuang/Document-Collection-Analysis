@@ -1,16 +1,3 @@
----
-title: Document Collection Analysis - Azure | Microsoft Docs
-description: How to summarize and analyze a large collection of documents, including techniques such as phrase learning, topic modeling, and topic model analysis using Azure ML Workbench.
-services: machine-learning
-documentationcenter: ''
-author: kehuan
-ms.author: kehuan
-ms.reviewer: garyericson, jasonwhowell, mldocs
-ms.service: machine-learning
-ms.topic: article
-ms.date: 09/20/2017
----
-
 # Document Collection Analysis
 
 This scenario demonstrates how to summarize and analyze a large collection of documents, including techniques such as phrase learning, topic modeling, and topic model analysis using Azure ML Workbench. Azure Machine Learning Workbench provides for easy scale up for very large document collection, and provides mechanisms to train and tune models within a variety of compute contexts, ranging from local compute to Data Science Virtual Machines to Spark Cluster. Easy development is provided through Jupyter notebooks within Azure Machine Learning Workbench.
@@ -164,7 +151,7 @@ phraseLearner.RunConfiguration(textData,
             num_workers=cpu_count()-1)
 ```
 
-> [!NOTE]
+> **NOTE:**
 > The phrase learning step is implemented with multiprocessing. However, more CPU cores do **NOT** mean a faster execution time. In our tests, the performance is not improved with more than eight cores due to the overhead of multiprocessing. It took about two and a half hours to learn 25,000 phrases on a machine with eight cores (3.6 GHz).
 >
 
@@ -210,7 +197,7 @@ coherence = topicmodeler.EvaluateCoherence(lda, coherence_types)
 perplex = topicmodeler.EvaluatePerplexity(lda)
 ```
 
-> [!NOTE]
+> **NOTE:**
 > The execution time to train an LDA topic model depends on multiple factors such as the size of corpus, hyper parameter configuration, as well as the number of cores on the machine. Using multiple CPU cores trains a model faster. However, with the same hyper parameter setting more cores means fewer updates during training. It is recommended to have **at least 100 updates to train a converged LDA model**. The relationship between number of updates and hyper parameters is discussed in [this post](https://groups.google.com/forum/#!topic/gensim/ojySenxQHi4) and [this post](http://miningthedetails.com/blog/python/lda/GensimLDA/). In our tests, it took about 3 hours to train an LDA model with 200 topics using the configuration of `workers=15`, `passes=10`, `chunksize=1000` on a machine with 16 cores (2.0 GHz).
 >
 
